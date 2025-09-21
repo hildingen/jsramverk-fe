@@ -4,11 +4,11 @@ import '../../styles/navbar.css'
 export default function Navbar() {
   return (
     <header>
-        <a href="/" class="logo">
+        <a href="/" className="logo">
             Jsramverk - FE  
         </a>
           
-        <div class="nav-links">
+        <div className="nav-links">
             <a href="/create-document">
                 Create document
             </a>
