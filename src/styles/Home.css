@@ -9,3 +9,39 @@
     font-size: 3rem;
     font-weight: bold;
 }
+
+.documents-page {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.documents-page h2 {
+    font-size: 40px;
+}
+
+.documents-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.documents-wrapper a {
+    text-decoration: none;
+    color: #DFD0B8;
+}
+
+.document {
+    border: 1px solid #DFD0B8;
+    width: 400px;
+    padding: 0px 10px;
+    border-radius: 4px;
+    background-color: #2a323e;
+    transition: transform 300ms ease-in-out;
+}
+
+.document:hover {
+    transform: scale(1.05);
+}
