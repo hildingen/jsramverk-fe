@@ -1,10 +1,21 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './styles/App.css';
+import Home from './components/pages/Home';
+import ViewDocuments from './components/pages/View-Documents';
+import CreateDocuments from './components/pages/Create-document';
+
 
 function App() {
   return (
-    <div className="App">
-        <h1>Jsramverk - FE (DV1677)</h1>
-    </div>
+    <BrowserRouter>
+      
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/create-document" element={<CreateDocuments />} />
+        <Route path="/view-documents" element={<ViewDocuments />} />
+      </Routes>
+    
+    </BrowserRouter>
   );
 }
 

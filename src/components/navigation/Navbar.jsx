@@ -9,12 +9,12 @@ export default function Navbar() {
         </a>
           
         <div class="nav-links">
-            <a href="/skapa-dokument">
-                Skapa dokument
+            <a href="/create-document">
+                Create document
             </a>
 
-            <a href="/se-dokument">
-                Se dokument
+            <a href="/view-documents">
+                All documents
             </a>
         </div>
           
