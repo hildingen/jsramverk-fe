@@ -1,10 +1,11 @@
 import React from 'react'
 import '../../styles/Home.css'
+import CreateDocumentForm from '../utils/create-document-form'
 
 export default function CreateDocuments() {
   return (
     <div className="App">
-        <h1>Create document</h1>
+        <CreateDocumentForm />
     </div>
   )
 }
