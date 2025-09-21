@@ -1,0 +1,35 @@
+header {
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #DFD0B8;
+    text-decoration: none;
+}
+
+.logo:hover {
+    cursor: pointer;
+    color: #948979
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #DFD0B8;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    cursor: pointer;
+    color: #948979
+}
