@@ -1,26 +1,26 @@
 
 import React from 'react'
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import '../../styles/Home.css'
 import dummyData from '../../dummy-data.json'
 
 export default function ViewDocuments() {
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
   
 
-  useEffect(() => {
-  //   async function fetchData() {
-  //     fetch('src/dummy-data.json')
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setData(data)
-  //     })
-  //     .catch(err => console.log(err));
-  //   }
+  // useEffect(() => {
+  // //   async function fetchData() {
+  // //     fetch('src/dummy-data.json')
+  // //     .then(res => res.json())
+  // //     .then(data => {
+  // //       setData(data)
+  // //     })
+  // //     .catch(err => console.log(err));
+  // //   }
     
-    // fetchData();
-    setData(dummyData)
-  }, [])
+  //   // fetchData();
+  //   setData(dummyData)
+  // }, [])
   
   return (
     <div className="documents-page">
