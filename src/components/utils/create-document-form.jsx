@@ -2,16 +2,10 @@ import React from 'react'
 import { useState } from 'react'
 import '../../styles/forms.css'
 
-export default function CreateDocumentForm() {
+export default function CreateDocumentForm({ onSubmit }) {
 
     const [name, setName] = useState('');
     const [content, setContent] = useState('');
-
-    function onSubmit(e) {
-        e.preventDefault();
-        console.log(`Submit form \n name:${name} \n content: ${content} `);
-        
-    }
 
     function updateNameState(e) {
         setName(e.target.value);
@@ -20,15 +14,20 @@ export default function CreateDocumentForm() {
     function updateContentState(e) {
         setContent(e.target.value);
     }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        onSubmit({ name: name, content: content });
+    }
   return (
     <div className="form-wrapper">
         <h2>Create a new document</h2>
-        <form className="create-form" onSubmit={onSubmit}>
-            <label htmlFor='name'>Name</label>
-            <input type='text' name='name' value={name} onChange={updateNameState} />
+        <form className="create-form" onSubmit={handleSubmit}>
+            <label htmlFor='create-document-name'>Name</label>
+            <input type='text' id='create-document-name' name='name' value={name} onChange={updateNameState} />
               
-            <label htmlFor='content'>Content</label>
-            <textarea name='content' rows={10} value={content} onChange={updateContentState} />
+            <label htmlFor='create-document-content'>Content</label>
+            <textarea name='content' id='create-document-content' rows={10} value={content} onChange={updateContentState} />
               
             <button type='submit'>Create document</button>
         </form>  
