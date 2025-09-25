@@ -1,11 +1,26 @@
 import React from 'react'
 import '../../styles/Home.css'
 import CreateDocumentForm from '../utils/create-document-form'
+import { redirect } from 'react-router-dom';
 
 export default function CreateDocuments() {
 
-  function onSubmit(formData) {
-        console.log(`Submit form \n name:${formData.name} \n content: ${formData.content} `);
+  async function onSubmit(formData) {
+    try {
+      const res = await fetch('http://localhost:3000/create', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({name: formData.name, content: formData.content})
+      })
+
+      if (res.ok) {
+        throw redirect('/all');
+      }
+    } catch (e) {
+      console.log('Something went wrong!', e);
+    }
     }
   return (
     <div className="App">
