@@ -5,13 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Navbar from './components/navigation/Navbar';
 import Footer from './components/navigation/Footer';
+import { HashRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Navbar />
-      <App />
-    <Footer />
+    <HashRouter>
+        <Navbar />
+          <App />
+        <Footer />
+      </HashRouter>
   </React.StrictMode>
 );
 

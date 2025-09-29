@@ -1,21 +1,22 @@
 import React from 'react'
 import '../../styles/navbar.css'
+import { Link } from 'react-router-dom'
 
 export default function Navbar() {
   return (
     <header>
-        <a href="/" className="logo">
+        <Link to="/" className="logo">
             Jsramverk - FE  
-        </a>
+        </Link>
           
         <div className="nav-links">
-            <a href="/create-document">
+            <Link to="/create-document">
                 Create document
-            </a>
+            </Link>
 
-            <a href="/view-documents">
+            <Link to="/view-documents">
                 All documents
-            </a>
+            </Link>
         </div>
           
     </header>
