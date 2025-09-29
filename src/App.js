@@ -8,7 +8,7 @@ import SingleDocument from './components/pages/Single-document';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/jsramverk-fe'>
       
       <Routes>
         <Route path="/" element={<Home />} />
