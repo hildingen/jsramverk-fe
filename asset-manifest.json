@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/jsramverk-fe/static/css/main.ef121899.css",
+    "main.js": "/jsramverk-fe/static/js/main.43a946f3.js",
+    "static/js/453.8bd12ba7.chunk.js": "/jsramverk-fe/static/js/453.8bd12ba7.chunk.js",
+    "index.html": "/jsramverk-fe/index.html",
+    "main.ef121899.css.map": "/jsramverk-fe/static/css/main.ef121899.css.map",
+    "main.43a946f3.js.map": "/jsramverk-fe/static/js/main.43a946f3.js.map",
+    "453.8bd12ba7.chunk.js.map": "/jsramverk-fe/static/js/453.8bd12ba7.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ef121899.css",
+    "static/js/main.43a946f3.js"
+  ]
+}
