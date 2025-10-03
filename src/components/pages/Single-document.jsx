@@ -9,8 +9,6 @@ export default function SingleDocument() {
   let { id } = useParams();
 
   useEffect(() => {
-    console.log(id);
-    
       async function fetchData() {
         fetch(`http://localhost:3000/find/${id}`)
         .then(res => res.json())
