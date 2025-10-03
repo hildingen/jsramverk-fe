@@ -9,7 +9,7 @@ export default function ViewDocuments() {
 
   useEffect(() => {
     async function fetchData() {
-      fetch(`https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net//all`)
+      fetch(`https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net/all`)
       .then(res => res.json())
       .then(data => {
         setData(data)
