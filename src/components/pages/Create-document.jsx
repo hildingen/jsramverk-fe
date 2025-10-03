@@ -7,7 +7,7 @@ export default function CreateDocuments() {
 
   async function onSubmit(formData) {
     try {
-      const res = await fetch('http://localhost:3000/create', {
+      const res = await fetch('https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net//create', {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
