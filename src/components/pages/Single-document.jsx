@@ -9,8 +9,10 @@ export default function SingleDocument() {
   let { id } = useParams();
 
   useEffect(() => {
+    console.log(id);
+    
       async function fetchData() {
-        fetch(`https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net/find/${id}`)
+        fetch(`http://localhost:3000/find/${id}`)
         .then(res => res.json())
         .then(data => {
           setName(data.data.article.name);
@@ -23,7 +25,7 @@ export default function SingleDocument() {
 
   async function onSubmit(formData) {
     try {
-      const res = await fetch(`https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net/update/${id}`, {
+      const res = await fetch(`http://localhost:3000/update/${id}`, {
         method: "PUT",
         headers: {
           'Content-Type': 'application/json'

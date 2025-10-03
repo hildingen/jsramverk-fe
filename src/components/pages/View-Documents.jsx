@@ -1,6 +1,7 @@
 
 import React from 'react'
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'
 import '../../styles/Home.css'
 
 export default function ViewDocuments() {
@@ -9,7 +10,7 @@ export default function ViewDocuments() {
 
   useEffect(() => {
     async function fetchData() {
-      fetch(`https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net/all`)
+      fetch(`http://localhost:3000/all`)
       .then(res => res.json())
       .then(data => {
         setData(data)
@@ -26,12 +27,12 @@ export default function ViewDocuments() {
       <h2>All documents</h2>
       <div className="documents-wrapper">
         {data?.map((item) => (
-          <a key={item._id} href={`/single-document/${item._id}`}>
+          <Link key={item._id} to={`/single-document/${item._id}`}>
           <div className='document'>
             <h1>{item.name}</h1>
             <p>{item.content}</p>
             </div>
-          </a>
+          </Link>
       ))}
         </div>
     </div>
