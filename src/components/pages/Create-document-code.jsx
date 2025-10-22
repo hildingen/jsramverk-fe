@@ -1,30 +1,70 @@
-import React from 'react'
-import '../../styles/Home.css'
-import CreateDocumentForm from '../utils/create-document-form'
-import { redirect } from 'react-router-dom';
+import React, { useState } from "react";
+import "../../styles/Home.css";
+import Editor from "@monaco-editor/react";
+import CreateCodePopup from "../utils/create-code-popup";
 
 export default function CreateDocumentsCode() {
+  const [value, setValue] = useState("console.log('test me!')");
+  const [output, setOutput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [viewPopup, setViewPopup] = useState(false);
 
-  async function onSubmit(formData) {
+  async function runCode() {
     try {
-      const res = await fetch('https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net/create', {
+      setLoading(true);
+      const res = await fetch("https://execjs.emilfolino.se/code", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({name: formData.name, content: formData.content})
-      })
+        body: JSON.stringify({
+          code: btoa(value),
+        }),
+      });
 
       if (res.ok) {
-        throw redirect('/all');
+        let response = await res.json();
+        setOutput(atob(response.data));
       }
     } catch (e) {
-      console.log('Something went wrong!', e);
+      console.log("Something went wrong!", e);
     }
-    }
+    setLoading(false);
+  }
   return (
     <div className="App">
-        <CreateDocumentForm onSubmit={onSubmit}/>
+      <div className="code-wrapper">
+        <h2>Create code snippet</h2>
+        <div className="code-container">
+          <div className="editor-container">
+            <div className="flex-container">
+              <h3>Input</h3>
+              <button onClick={runCode}>
+                {loading ? "Loading..." : "Run code"}
+              </button>
+            </div>
+            <Editor
+              height="60vh"
+              defaultLanguage="javascript"
+              defaultValue={value}
+              theme="vs-dark"
+              value={value}
+              onChange={(e) => setValue(e)}
+            />
+          </div>
+          <div className="code-output-container">
+            <div className="flex-container">
+              <h3>Output</h3>
+              <button onClick={() => setViewPopup(true)}>Save code</button>
+            </div>
+            <div className="inner-output-container">{output}</div>
+          </div>
+        </div>
+      </div>
+
+      {viewPopup && (
+        <CreateCodePopup value={value} setViewPopup={setViewPopup} />
+      )}
     </div>
-  )
+  );
 }

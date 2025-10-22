@@ -10,7 +10,7 @@ export default function CreateDocuments() {
         <Link to="/create-document-regular">
           <button>Regular document</button>
         </Link>
-        <Link to="/create-document-regular">
+        <Link to="/create-document-code">
           <button>Code editor</button>
         </Link>
         </div>
