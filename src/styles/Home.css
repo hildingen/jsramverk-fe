@@ -40,6 +40,7 @@
   border-radius: 4px;
   background-color: #2a323e;
   transition: transform 300ms ease-in-out;
+  position: relative;
 }
 
 .document:hover {
@@ -118,4 +119,13 @@
 
 .detail-color {
   background-color: #70a1eb;
+}
+
+.type {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 10px;
+  margin-top: 5px;
+  color: #70a1eb;
 }
