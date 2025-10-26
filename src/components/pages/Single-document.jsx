@@ -28,8 +28,6 @@ export default function SingleDocument() {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
-
                     setName(data.data.article.name);
                     setContent(data.data.article.content);
                     setType(data.data.article.type);
@@ -42,18 +40,30 @@ export default function SingleDocument() {
 
     async function onSubmit(formData) {
         try {
-            const res = await fetch(`http://localhost:8080/update/${id}`, {
-                method: 'PUT',
+            console.log(formData);
+
+            const res = await fetch('http://localhost:8080/graphql', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: formData.name,
-                    content: formData.content,
+                    query: `mutation UpdateArticle($id: String!, $name:String!, $content: String!) { 
+                    updateArticle(id: $id, name: $name, content: $content) { 
+                      _id
+                      name
+                      content
+                      type
+                     }}`,
+                    variables: {
+                        id: id,
+                        name: formData.name,
+                        content: formData.content,
+                    },
                 }),
             });
 
-            if (res.ok) {
+            if (res) {
                 navigate('/view-documents');
             }
         } catch (e) {
