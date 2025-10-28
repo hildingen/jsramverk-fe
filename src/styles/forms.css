@@ -1,5 +1,5 @@
 .form-wrapper {
-    width: 800px;
+    width: 100%;
 }
 
 .create-form {
@@ -14,8 +14,8 @@
     font-size: 1.2rem;
     border-radius: 4px;
     background-color: #2a323e;
-    border: 1px solid #DFD0B8;
-    color: #DFD0B8;
+    border: 1px solid #dfd0b8;
+    color: #dfd0b8;
 }
 
 .create-form label {
@@ -28,8 +28,8 @@ textarea {
     font-size: 1.2rem;
     border-radius: 4px;
     background-color: #2a323e;
-    border: 1px solid #DFD0B8;
-    color: #DFD0B8;
+    border: 1px solid #dfd0b8;
+    color: #dfd0b8;
 }
 
 button {
@@ -38,10 +38,84 @@ button {
     font-size: 1.4rem;
     background-color: #f4b755;
     border-radius: 4px;
-    border: 1px solid #DFD0B8;
+    border: 1px solid #dfd0b8;
 }
 
 button:hover {
     cursor: pointer;
-    opacity: .8;
+    opacity: 0.8;
+}
+
+.preview-container {
+    border: 1px solid #dfd0b8;
+    height: 100%;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.preview-wrapper {
+    width: 100%;
+}
+
+p {
+    margin: 0;
+}
+
+.whitespace {
+    height: 20px;
+    width: 100%;
+}
+
+.row-p {
+    position: relative;
+}
+
+.add-comment {
+    position: absolute;
+    border-radius: 100%;
+    color: rgb(58, 244, 216);
+    top: -20px;
+    font-size: 30px;
+    right: 0;
+    display: none;
+}
+
+.row-p:hover {
+    background-color: #2e3643;
+    cursor: pointer;
+}
+
+.row-p:hover .add-comment {
+    display: block;
+}
+
+.comment-exist {
+    background-color: #2a323e;
+}
+
+.comment-active-hide {
+    position: absolute;
+    border-radius: 100%;
+    color: rgb(58, 244, 216);
+    top: -20px;
+    font-size: 30px;
+    right: 0;
+    display: none;
+}
+
+.comment-active-view {
+    position: absolute;
+    border-radius: 100%;
+    color: rgb(58, 244, 216);
+    top: -10px;
+    font-size: 20px;
+    right: 0;
+}
+
+.warning {
+    background-color: red;
+}
+
+.mt-5 {
+    margin-top: 20px;
 }

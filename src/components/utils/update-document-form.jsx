@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import '../../styles/forms.css';
 import { io } from 'socket.io-client';
+import AddCommentPopup from './add-comment-popup';
 
 let socket;
 
@@ -14,6 +15,10 @@ export default function UpdateDocumentForm({
     const [name, setName] = useState(nameProps);
     const [content, setContent] = useState(contentProps);
     const [room, setRoom] = useState(id);
+    const [viewPopup, setViewPopup] = useState(false);
+    const [commentIndex, setCommentIndex] = useState('');
+    const [comments, setComments] = useState([]);
+    const [commentValue, setCommentValue] = useState('');
 
     useEffect(() => {
         socket = io('http://localhost:8080');
@@ -26,6 +31,10 @@ export default function UpdateDocumentForm({
 
         socket.on('content_update', function (data) {
             setContent(data);
+        });
+
+        socket.on('comment_update', function (data) {
+            setComments(data);
         });
 
         return () => {
@@ -48,6 +57,7 @@ export default function UpdateDocumentForm({
 
     function updateContentState(e) {
         setContent(e.target.value);
+
         socket.emit('content_update', { room, data: e.target.value });
     }
 
@@ -55,32 +65,134 @@ export default function UpdateDocumentForm({
         e.preventDefault();
         onSubmit({ name: name, content: content });
     }
+
+    function addComment(index) {
+        if (comments) {
+            comments.forEach((item) => {
+                if (item.row === index) {
+                    setCommentValue(item.data);
+                }
+            });
+        } else {
+            setCommentValue('');
+        }
+        setCommentIndex(index);
+        setViewPopup(true);
+    }
+
+    function removeClassList(index) {
+        comments.forEach((item) => {
+            if (item.row === index) {
+                let row = document.getElementById(`row${item.row}`);
+                let span = document.getElementById(`span${item.row}`);
+
+                span.classList.remove('comment-active-view');
+                span.classList.add('comment-active-hide');
+
+                row.classList.remove('comment-exist');
+            }
+        });
+    }
+
+    useEffect(() => {
+        let activeComments = document.getElementsByClassName('comment-exist');
+
+        for (let item of activeComments) {
+            item.classList.remove('comment-exist');
+        }
+
+        let activeComments2 = document.getElementsByClassName(
+            'comment-active-view'
+        );
+
+        for (let item of activeComments2) {
+            item.classList.remove('comment-active-view');
+            item.classList.add('comment-active-hide');
+        }
+
+        comments.forEach((item) => {
+            let row = document.getElementById(`row${item.row}`);
+            let span = document.getElementById(`span${item.row}`);
+
+            span.classList.remove('comment-active-hide');
+            span.classList.add('comment-active-view');
+
+            row.classList.add('comment-exist');
+        });
+        setCommentValue('');
+    }, [comments]);
     return (
         <div className='App'>
-            <div className='form-wrapper'>
-                <h2>Update document</h2>
-                <form className='create-form' onSubmit={handleSubmit}>
-                    <label htmlFor='create-document-name'>Name</label>
-                    <input
-                        type='text'
-                        id='create-document-name'
-                        name='name'
-                        value={name}
-                        onChange={updateNameState}
-                    />
+            <div className='code-container'>
+                <div className='form-wrapper'>
+                    <h2>Update document</h2>
+                    <form className='create-form' onSubmit={handleSubmit}>
+                        <label htmlFor='create-document-name'>Name</label>
+                        <input
+                            type='text'
+                            id='create-document-name'
+                            name='name'
+                            value={name}
+                            onChange={updateNameState}
+                        />
 
-                    <label htmlFor='create-document-content'>Content</label>
-                    <textarea
-                        name='content'
-                        id='create-document-content'
-                        rows={10}
-                        value={content}
-                        onChange={updateContentState}
-                    />
+                        <label htmlFor='create-document-content'>Content</label>
+                        <textarea
+                            name='content'
+                            id='create-document-content'
+                            rows={20}
+                            value={content}
+                            onChange={updateContentState}
+                        />
 
-                    <button type='submit'>Update document</button>
-                </form>
+                        <button type='submit'>Update document</button>
+                    </form>
+                </div>
+
+                <div className='preview-wrapper'>
+                    <h2>Preview</h2>
+                    <div className='preview-container'>
+                        <div>
+                            {content.split('\n').map((row, index) =>
+                                row === '' ? (
+                                    <div key={index} className='whitespace' />
+                                ) : (
+                                    <div
+                                        id={`row${index}`}
+                                        onClick={() => addComment(index)}
+                                        className='row-p'
+                                        key={index}
+                                    >
+                                        <p>{row}</p>
+                                        <span className='add-comment'>+</span>
+                                        <span
+                                            id={`span${index}`}
+                                            className='comment-active-hide'
+                                        >
+                                            !
+                                        </span>
+                                    </div>
+                                )
+                            )}
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            {viewPopup && (
+                <AddCommentPopup
+                    setViewPopup={setViewPopup}
+                    value={commentValue}
+                    index={commentIndex}
+                    comments={comments}
+                    commentValue={commentValue}
+                    setCommentValue={setCommentValue}
+                    setComments={setComments}
+                    removeClassList={removeClassList}
+                    socket={socket}
+                    room={room}
+                />
+            )}
         </div>
     );
 }
