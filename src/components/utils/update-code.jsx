@@ -11,12 +11,11 @@ export default function UpdateCode({ code, onSubmit, savedName, id }) {
     const [output, setOutput] = useState('');
     const [loading, setLoading] = useState(false);
     const [viewPopup, setViewPopup] = useState(false);
-    const [room, setRoom] = useState(id);
 
     useEffect(() => {
         socket = io('http://localhost:8080');
 
-        socket.emit('create', room);
+        socket.emit('create', id);
 
         socket.on('content_update', function (data) {
             setValue(data);
@@ -25,11 +24,11 @@ export default function UpdateCode({ code, onSubmit, savedName, id }) {
         return () => {
             socket.disconnect();
         };
-    }, [room]);
+    }, [id]);
 
     function handleEditorChange(val) {
         setValue(val);
-        socket.emit('content_update', { room, data: val });
+        socket.emit('content_update', { id, data: val });
     }
 
     useEffect(() => {

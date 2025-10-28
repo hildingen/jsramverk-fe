@@ -14,7 +14,6 @@ export default function UpdateDocumentForm({
 }) {
     const [name, setName] = useState(nameProps);
     const [content, setContent] = useState(contentProps);
-    const [room, setRoom] = useState(id);
     const [viewPopup, setViewPopup] = useState(false);
     const [commentIndex, setCommentIndex] = useState('');
     const [comments, setComments] = useState([]);
@@ -23,7 +22,7 @@ export default function UpdateDocumentForm({
     useEffect(() => {
         socket = io('http://localhost:8080');
 
-        socket.emit('create', room);
+        socket.emit('create', id);
 
         socket.on('name_update', function (data) {
             setName(data);
@@ -40,7 +39,7 @@ export default function UpdateDocumentForm({
         return () => {
             socket.disconnect();
         };
-    }, [room]);
+    }, [id]);
 
     useEffect(() => {
         setName(nameProps);
@@ -52,13 +51,13 @@ export default function UpdateDocumentForm({
 
     function updateNameState(e) {
         setName(e.target.value);
-        socket.emit('name_update', { room, data: e.target.value });
+        socket.emit('name_update', { id, data: e.target.value });
     }
 
     function updateContentState(e) {
         setContent(e.target.value);
 
-        socket.emit('content_update', { room, data: e.target.value });
+        socket.emit('content_update', { id, data: e.target.value });
     }
 
     function handleSubmit(e) {
@@ -190,7 +189,7 @@ export default function UpdateDocumentForm({
                     setComments={setComments}
                     removeClassList={removeClassList}
                     socket={socket}
-                    room={room}
+                    room={id}
                 />
             )}
         </div>
