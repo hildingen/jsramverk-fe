@@ -1,61 +1,86 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import "../../styles/forms.css";
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import '../../styles/forms.css';
+import { io } from 'socket.io-client';
+
+let socket;
 
 export default function UpdateDocumentForm({
-  onSubmit,
-  nameProps,
-  contentProps,
+    onSubmit,
+    nameProps,
+    contentProps,
+    id,
 }) {
-  const [name, setName] = useState(nameProps);
-  const [content, setContent] = useState(contentProps);
+    const [name, setName] = useState(nameProps);
+    const [content, setContent] = useState(contentProps);
+    const [room, setRoom] = useState(id);
 
-  useEffect(() => {
-    setName(nameProps);
-  }, [nameProps]);
+    useEffect(() => {
+        socket = io('http://localhost:8080');
 
-  useEffect(() => {
-    setContent(contentProps);
-  }, [contentProps]);
+        socket.emit('create', room);
 
-  function updateNameState(e) {
-    setName(e.target.value);
-  }
+        socket.on('name_update', function (data) {
+            setName(data);
+        });
 
-  function updateContentState(e) {
-    setContent(e.target.value);
-  }
+        socket.on('content_update', function (data) {
+            setContent(data);
+        });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    onSubmit({ name: name, content: content });
-  }
-  return (
-    <div className="App">
-      <div className="form-wrapper">
-        <h2>Update document</h2>
-        <form className="create-form" onSubmit={handleSubmit}>
-          <label htmlFor="create-document-name">Name</label>
-          <input
-            type="text"
-            id="create-document-name"
-            name="name"
-            value={name}
-            onChange={updateNameState}
-          />
+        return () => {
+            socket.disconnect();
+        };
+    }, [room]);
 
-          <label htmlFor="create-document-content">Content</label>
-          <textarea
-            name="content"
-            id="create-document-content"
-            rows={10}
-            value={content}
-            onChange={updateContentState}
-          />
+    useEffect(() => {
+        setName(nameProps);
+    }, [nameProps]);
 
-          <button type="submit">Update document</button>
-        </form>
-      </div>
-    </div>
-  );
+    useEffect(() => {
+        setContent(contentProps);
+    }, [contentProps]);
+
+    function updateNameState(e) {
+        setName(e.target.value);
+        socket.emit('name_update', { room, data: e.target.value });
+    }
+
+    function updateContentState(e) {
+        setContent(e.target.value);
+        socket.emit('content_update', { room, data: e.target.value });
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        onSubmit({ name: name, content: content });
+    }
+    return (
+        <div className='App'>
+            <div className='form-wrapper'>
+                <h2>Update document</h2>
+                <form className='create-form' onSubmit={handleSubmit}>
+                    <label htmlFor='create-document-name'>Name</label>
+                    <input
+                        type='text'
+                        id='create-document-name'
+                        name='name'
+                        value={name}
+                        onChange={updateNameState}
+                    />
+
+                    <label htmlFor='create-document-content'>Content</label>
+                    <textarea
+                        name='content'
+                        id='create-document-content'
+                        rows={10}
+                        value={content}
+                        onChange={updateContentState}
+                    />
+
+                    <button type='submit'>Update document</button>
+                </form>
+            </div>
+        </div>
+    );
 }

@@ -82,12 +82,14 @@ export default function SingleDocument() {
                     onSubmit={onSubmit}
                     nameProps={name}
                     contentProps={content}
+                    id={id}
                 />
             ) : (
                 <UpdateCode
                     onSubmit={onSubmit}
                     savedName={name}
                     code={content}
+                    id={id}
                 />
             )}
         </div>
