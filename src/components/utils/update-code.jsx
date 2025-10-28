@@ -69,13 +69,15 @@ export default function UpdateCode({ code, onSubmit, savedName, id }) {
                                 {loading ? 'Loading...' : 'Run code'}
                             </button>
                         </div>
-                        <Editor
-                            height='60vh'
-                            defaultLanguage='javascript'
-                            theme='vs-dark'
-                            value={value}
-                            onChange={handleEditorChange}
-                        />
+                        <div data-testid='editor'>
+                            <Editor
+                                height='60vh'
+                                defaultLanguage='javascript'
+                                theme='vs-dark'
+                                value={value}
+                                onChange={handleEditorChange}
+                            />
+                        </div>
                     </div>
                     <div className='code-output-container'>
                         <div className='flex-container'>
@@ -84,7 +86,12 @@ export default function UpdateCode({ code, onSubmit, savedName, id }) {
                                 Save code
                             </button>
                         </div>
-                        <div className='inner-output-container'>{output}</div>
+                        <div
+                            data-testid='output-container'
+                            className='inner-output-container'
+                        >
+                            {output}
+                        </div>
                     </div>
                 </div>
             </div>

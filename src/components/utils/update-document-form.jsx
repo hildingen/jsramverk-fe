@@ -124,7 +124,7 @@ export default function UpdateDocumentForm({
         <div className='App'>
             <div className='code-container'>
                 <div className='form-wrapper'>
-                    <h2>Update document</h2>
+                    <h2 data-testid='h2-docs'>Update document</h2>
                     <form className='create-form' onSubmit={handleSubmit}>
                         <label htmlFor='create-document-name'>Name</label>
                         <input
@@ -157,12 +157,13 @@ export default function UpdateDocumentForm({
                                     <div key={index} className='whitespace' />
                                 ) : (
                                     <div
+                                        data-testid='comment-click'
                                         id={`row${index}`}
                                         onClick={() => addComment(index)}
                                         className='row-p'
                                         key={index}
                                     >
-                                        <p>{row}</p>
+                                        <p data-testid='row-test'>{row}</p>
                                         <span className='add-comment'>+</span>
                                         <span
                                             id={`span${index}`}
