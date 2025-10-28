@@ -14,7 +14,7 @@ export default function UpdateCodePopup({
     }
 
     return (
-        <div className='popup-wrapper'>
+        <div data-testid='popup-code' className='popup-wrapper'>
             <div className='popup-content'>
                 <h1>Save code</h1>
                 <form className='create-form' onSubmit={handleSubmit}>
