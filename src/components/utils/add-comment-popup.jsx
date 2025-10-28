@@ -44,7 +44,7 @@ export default function AddCommentPopup({
     }
 
     return (
-        <div className='popup-wrapper'>
+        <div data-testid='comment-popup' className='popup-wrapper'>
             <div className='popup-content'>
                 <h1>Add comment</h1>
                 <form className='create-form' onSubmit={saveComment}>
