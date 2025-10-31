@@ -9,6 +9,7 @@ export default function SingleDocument() {
     const [content, setContent] = useState('');
     const [type, setType] = useState('');
     const [loading, setLoading] = useState(true);
+    const [inviteEmail, setInviteEmail] = useState('');
     let { id } = useParams();
     const navigate = useNavigate();
 
@@ -67,7 +68,42 @@ export default function SingleDocument() {
                 navigate('/view-documents');
             }
         } catch (e) {
-            console.log('Something went wrong!', e);
+            console.log('error', e);
+        }
+    }
+
+    async function sendInvite(e) {
+        e.preventDefault();
+
+        try {
+            const token = localStorage.getItem('token');
+            const res = await fetch('http://localhost:8080/graphql', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'x-access-token': token || '',
+                },
+                body: JSON.stringify({
+                    query: `mutation Mail($receiver: String!, $articleId: String!) {
+                        mail(receiver: $receiver, articleId: $articleId) {
+                            msg
+                        }
+                    }`,
+                    variables: {
+                        receiver: inviteEmail,
+                        articleId: id,
+                    },
+                }),
+            });
+
+            const data = await res.json();
+
+            if (data.data.mail.msg) {
+                setInviteEmail('');
+            }
+        } catch (e) {
+            console.log('error', e);
         }
     }
 
@@ -77,6 +113,16 @@ export default function SingleDocument() {
 
     return (
         <div>
+            <form onSubmit={sendInvite}>
+                <input
+                    type="email"
+                    value={inviteEmail}
+                    onChange={(e) => setInviteEmail(e.target.value)}
+                    placeholder="enter email"
+                    required
+                />
+                <button type="submit">Invite</button>
+            </form>
             {type === 'regular' ? (
                 <UpdateDocumentForm
                     onSubmit={onSubmit}

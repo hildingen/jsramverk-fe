@@ -10,8 +10,8 @@ export default function Navbar() {
             </Link>
 
             <div className='nav-links'>
+                <Link to='/login'>Login</Link>
                 <Link to='/create-document'>Create document</Link>
-
                 <Link to='/view-documents'>All documents</Link>
             </div>
         </header>

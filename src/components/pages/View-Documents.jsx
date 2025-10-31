@@ -10,20 +10,29 @@ export default function ViewDocuments() {
 
     useEffect(() => {
         async function fetchData() {
+            const token = localStorage.getItem('token'); 
+            
             fetch('http://localhost:8080/graphql', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Accept: 'application/json',
+                    'Accept': 'application/json',
+                    'x-access-token': token || '' 
                 },
                 body: JSON.stringify({
                     query: '{ articles { _id name content type } }',
                 }),
             })
                 .then((res) => res.json())
-                .then((data) => setData(data.data));
+                .then((data) => {
+                    if (data.errors) {
+                        console.error('GraphQL errors:', data.errors);
+                    } else {
+                        console.log('Articles data:', data.data);
+                        setData(data.data);
+                    }
+                });
         }
-
         fetchData();
     }, []);
 
