@@ -13,7 +13,9 @@ export default function UpdateCode({ code, onSubmit, savedName, id }) {
     const [viewPopup, setViewPopup] = useState(false);
 
     useEffect(() => {
-        socket = io('http://localhost:8080');
+        socket = io('http://localhost:8080', {
+            auth: { token: localStorage.getItem('token') },
+        });
 
         socket.emit('create', id);
 

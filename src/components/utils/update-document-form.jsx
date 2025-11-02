@@ -20,7 +20,9 @@ export default function UpdateDocumentForm({
     const [commentValue, setCommentValue] = useState('');
 
     useEffect(() => {
-        socket = io('http://localhost:8080');
+        socket = io('http://localhost:8080', {
+            auth: { token: localStorage.getItem('token') },
+        });
 
         socket.emit('create', id);
 
