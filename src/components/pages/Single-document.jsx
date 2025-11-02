@@ -17,11 +17,13 @@ export default function SingleDocument() {
 
     useEffect(() => {
         async function fetchData() {
+            const token = localStorage.getItem('token');
             fetch('http://localhost:8080/graphql', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Accept: 'application/json',
+                    'x-access-token': token || '',
                 },
                 body: JSON.stringify({
                     query: `{ article(articleId: "${id}") { _id name content type } }`,
@@ -43,10 +45,13 @@ export default function SingleDocument() {
         try {
             console.log(formData);
 
+            const token = localStorage.getItem('token');
             const res = await fetch('http://localhost:8080/graphql', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'x-access-token': token || '',
                 },
                 body: JSON.stringify({
                     query: `mutation UpdateArticle($id: String!, $name:String!, $content: String!) { 

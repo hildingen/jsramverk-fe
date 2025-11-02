@@ -11,10 +11,13 @@ export default function CreateCodePopup({ value, setViewPopup }) {
     async function saveCode() {
         try {
             setLoading(true);
+            const token = localStorage.getItem('token');
             const res = await fetch('http://localhost:8080/graphql', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'x-access-token': token || '',
                 },
                 body: JSON.stringify({
                     query: `mutation CreateArticle($name: String!, $content: String!) { 

@@ -8,11 +8,13 @@ export default function CreateDocumentsRegular() {
 
     async function onSubmit(formData) {
         try {
+            const token = localStorage.getItem('token');
             const res = fetch('http://localhost:8080/graphql', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Accept: 'application/json',
+                    'x-access-token': token || '',
                 },
                 body: JSON.stringify({
                     query: `mutation CreateArticle($name: String!, $content: String!) { 
