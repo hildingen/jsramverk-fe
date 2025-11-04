@@ -13,9 +13,12 @@ export default function UpdateCode({ code, onSubmit, savedName, id }) {
     const [viewPopup, setViewPopup] = useState(false);
 
     useEffect(() => {
-        socket = io('http://localhost:8080', {
-            auth: { token: localStorage.getItem('token') },
-        });
+        socket = io(
+            'https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net',
+            {
+                auth: { token: localStorage.getItem('token') },
+            }
+        );
 
         socket.emit('create', id);
 

@@ -12,27 +12,30 @@ export default function CreateCodePopup({ value, setViewPopup }) {
         try {
             setLoading(true);
             const token = localStorage.getItem('token');
-            const res = await fetch('http://localhost:8080/graphql', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    'x-access-token': token || '',
-                },
-                body: JSON.stringify({
-                    query: `mutation CreateArticle($name: String!, $content: String!) { 
+            const res = await fetch(
+                'https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net/graphql',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        'x-access-token': token || '',
+                    },
+                    body: JSON.stringify({
+                        query: `mutation CreateArticle($name: String!, $content: String!) { 
                     createArticle(name: $name, content: $content, type: "code") { 
                       _id
                       name
                       content
                       type
                      }}`,
-                    variables: {
-                        name: name,
-                        content: value,
-                    },
-                }),
-            });
+                        variables: {
+                            name: name,
+                            content: value,
+                        },
+                    }),
+                }
+            );
 
             if (res.ok) {
                 navigate('/view-documents');

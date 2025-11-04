@@ -32,20 +32,23 @@ export default function Login() {
             }
           }`;
 
-            const res = await fetch('http://localhost:8080/graphql', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-                body: JSON.stringify({
-                    query: query,
-                    variables: {
-                        email: email,
-                        password: password,
+            const res = await fetch(
+                'https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net/graphql',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
                     },
-                }),
-            });
+                    body: JSON.stringify({
+                        query: query,
+                        variables: {
+                            email: email,
+                            password: password,
+                        },
+                    }),
+                }
+            );
 
             const data = await res.json();
 

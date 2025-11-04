@@ -12,17 +12,20 @@ export default function ViewDocuments() {
         async function fetchData() {
             const token = localStorage.getItem('token');
 
-            fetch('http://localhost:8080/graphql', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    'x-access-token': token || '',
-                },
-                body: JSON.stringify({
-                    query: '{ articles { _id name content type } }',
-                }),
-            })
+            fetch(
+                'https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net/graphql',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        'x-access-token': token || '',
+                    },
+                    body: JSON.stringify({
+                        query: '{ articles { _id name content type } }',
+                    }),
+                }
+            )
                 .then((res) => res.json())
                 .then((data) => {
                     if (data.errors) {

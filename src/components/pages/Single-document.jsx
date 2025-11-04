@@ -15,22 +15,23 @@ export default function SingleDocument() {
     let { id } = useParams();
     const navigate = useNavigate();
 
-    //https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net
-
     useEffect(() => {
         async function fetchData() {
             const token = localStorage.getItem('token');
-            fetch('http://localhost:8080/graphql', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    'x-access-token': token || '',
-                },
-                body: JSON.stringify({
-                    query: `{ article(articleId: "${id}") { _id name content type } }`,
-                }),
-            })
+            fetch(
+                'https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net/graphql',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        'x-access-token': token || '',
+                    },
+                    body: JSON.stringify({
+                        query: `{ article(articleId: "${id}") { _id name content type } }`,
+                    }),
+                }
+            )
                 .then((res) => res.json())
                 .then((data) => {
                     setName(data.data.article.name);
@@ -46,28 +47,31 @@ export default function SingleDocument() {
     async function onSubmit(formData) {
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch('http://localhost:8080/graphql', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    'x-access-token': token || '',
-                },
-                body: JSON.stringify({
-                    query: `mutation UpdateArticle($id: String!, $name:String!, $content: String!) { 
+            const res = await fetch(
+                'https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net/graphql',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        'x-access-token': token || '',
+                    },
+                    body: JSON.stringify({
+                        query: `mutation UpdateArticle($id: String!, $name:String!, $content: String!) { 
                     updateArticle(id: $id, name: $name, content: $content) { 
                       _id
                       name
                       content
                       type
                      }}`,
-                    variables: {
-                        id: id,
-                        name: formData.name,
-                        content: formData.content,
-                    },
-                }),
-            });
+                        variables: {
+                            id: id,
+                            name: formData.name,
+                            content: formData.content,
+                        },
+                    }),
+                }
+            );
 
             if (res) {
                 navigate('/view-documents');
@@ -82,25 +86,28 @@ export default function SingleDocument() {
 
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch('http://localhost:8080/graphql', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    'x-access-token': token || '',
-                },
-                body: JSON.stringify({
-                    query: `mutation Mail($receiver: String!, $articleId: String!) {
+            const res = await fetch(
+                'https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net/graphql',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        'x-access-token': token || '',
+                    },
+                    body: JSON.stringify({
+                        query: `mutation Mail($receiver: String!, $articleId: String!) {
                         mail(receiver: $receiver, articleId: $articleId) {
                             msg
                         }
                     }`,
-                    variables: {
-                        receiver: inviteEmail,
-                        articleId: id,
-                    },
-                }),
-            });
+                        variables: {
+                            receiver: inviteEmail,
+                            articleId: id,
+                        },
+                    }),
+                }
+            );
 
             const data = await res.json();
 

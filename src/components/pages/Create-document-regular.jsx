@@ -9,27 +9,30 @@ export default function CreateDocumentsRegular() {
     async function onSubmit(formData) {
         try {
             const token = localStorage.getItem('token');
-            const res = fetch('http://localhost:8080/graphql', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    'x-access-token': token || '',
-                },
-                body: JSON.stringify({
-                    query: `mutation CreateArticle($name: String!, $content: String!) { 
+            const res = fetch(
+                'https://jsramverk-dasv22-fug6buh8daasaqbj.northeurope-01.azurewebsites.net/graphql',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                        'x-access-token': token || '',
+                    },
+                    body: JSON.stringify({
+                        query: `mutation CreateArticle($name: String!, $content: String!) { 
                     createArticle(name: $name, content: $content, type: "regular") { 
                       _id
                       name
                       content
                       type
                      }}`,
-                    variables: {
-                        name: formData.name,
-                        content: formData.content,
-                    },
-                }),
-            });
+                        variables: {
+                            name: formData.name,
+                            content: formData.content,
+                        },
+                    }),
+                }
+            );
 
             if (res) {
                 navigate('/view-documents');
