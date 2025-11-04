@@ -29,8 +29,10 @@ export default function UpdateCode({ code, onSubmit, savedName, id }) {
     }, [id]);
 
     function handleEditorChange(val) {
+        console.log(`ID: ${id}`);
+
         setValue(val);
-        socket.emit('content_update', { id, data: val });
+        socket.emit('content_update', { room: id, data: val });
     }
 
     useEffect(() => {

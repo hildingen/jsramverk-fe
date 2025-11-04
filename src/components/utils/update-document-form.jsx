@@ -35,7 +35,9 @@ export default function UpdateDocumentForm({
         });
 
         socket.on('comment_update', function (data) {
-            setComments(data);
+            setComments([...comments, data]);
+
+            console.log(comments);
         });
 
         return () => {
@@ -59,7 +61,7 @@ export default function UpdateDocumentForm({
     function updateContentState(e) {
         setContent(e.target.value);
 
-        socket.emit('content_update', { id, data: e.target.value });
+        socket.emit('content_update', { room: id, data: e.target.value });
     }
 
     function handleSubmit(e) {
@@ -69,7 +71,7 @@ export default function UpdateDocumentForm({
 
     function addComment(index) {
         if (comments) {
-            comments.forEach((item) => {
+            comments?.forEach((item) => {
                 if (item.row === index) {
                     setCommentValue(item.data);
                 }
@@ -82,7 +84,7 @@ export default function UpdateDocumentForm({
     }
 
     function removeClassList(index) {
-        comments.forEach((item) => {
+        comments?.forEach((item) => {
             if (item.row === index) {
                 let row = document.getElementById(`row${item.row}`);
                 let span = document.getElementById(`span${item.row}`);
@@ -111,14 +113,22 @@ export default function UpdateDocumentForm({
             item.classList.add('comment-active-hide');
         }
 
-        comments.forEach((item) => {
-            let row = document.getElementById(`row${item.row}`);
-            let span = document.getElementById(`span${item.row}`);
+        comments?.forEach((item) => {
+            let row = document.getElementById(
+                `row${item.row ? item.row : item.lineNumber}`
+            );
+            let span = document.getElementById(
+                `span${item.row ? item.row : item.lineNumber}`
+            );
 
-            span.classList.remove('comment-active-hide');
-            span.classList.add('comment-active-view');
+            if (span) {
+                span.classList.remove('comment-active-hide');
+                span.classList.add('comment-active-view');
+            }
 
-            row.classList.add('comment-exist');
+            if (row) {
+                row.classList.add('comment-exist');
+            }
         });
         setCommentValue('');
     }, [comments]);

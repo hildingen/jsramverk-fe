@@ -8,28 +8,42 @@ header {
 .logo {
     font-size: 1.6rem;
     font-weight: bold;
-    color: #DFD0B8;
+    color: #dfd0b8;
     text-decoration: none;
 }
 
 .logo:hover {
     cursor: pointer;
-    color: #948979
+    color: #948979;
 }
 
 .nav-links {
     display: flex;
     gap: 20px;
+    align-items: center;
 }
 
 .nav-links a {
     font-size: 1.4rem;
     font-weight: 500;
-    color: #DFD0B8;
+    color: #dfd0b8;
     text-decoration: none;
 }
 
 .nav-links a:hover {
     cursor: pointer;
-    color: #948979
+    color: #948979;
+}
+
+h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.logout-button {
+    background-color: red;
+    color: #dfd0b8;
+    padding: 12px 24px;
+    border-radius: 4px;
 }

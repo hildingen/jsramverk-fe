@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import UpdateDocumentForm from '../utils/update-document-form';
 import UpdateCode from '../utils/update-code';
 import { useNavigate } from 'react-router-dom';
+import InviteUserPopup from '../utils/invite-user-popup';
 
 export default function SingleDocument() {
     const [name, setName] = useState('');
@@ -10,6 +11,7 @@ export default function SingleDocument() {
     const [type, setType] = useState('');
     const [loading, setLoading] = useState(true);
     const [inviteEmail, setInviteEmail] = useState('');
+    const [showPopup, setShowPopup] = useState(false);
     let { id } = useParams();
     const navigate = useNavigate();
 
@@ -43,8 +45,6 @@ export default function SingleDocument() {
 
     async function onSubmit(formData) {
         try {
-            console.log(formData);
-
             const token = localStorage.getItem('token');
             const res = await fetch('http://localhost:8080/graphql', {
                 method: 'POST',
@@ -107,6 +107,8 @@ export default function SingleDocument() {
             if (data.data.mail.msg) {
                 setInviteEmail('');
             }
+            alert('Invitation sent');
+            setShowPopup(false);
         } catch (e) {
             console.log('error', e);
         }
@@ -118,16 +120,7 @@ export default function SingleDocument() {
 
     return (
         <div>
-            <form onSubmit={sendInvite}>
-                <input
-                    type="email"
-                    value={inviteEmail}
-                    onChange={(e) => setInviteEmail(e.target.value)}
-                    placeholder="enter email"
-                    required
-                />
-                <button type="submit">Invite</button>
-            </form>
+            <button onClick={() => setShowPopup(true)}>Invite user</button>
             {type === 'regular' ? (
                 <UpdateDocumentForm
                     onSubmit={onSubmit}
@@ -141,6 +134,15 @@ export default function SingleDocument() {
                     savedName={name}
                     code={content}
                     id={id}
+                />
+            )}
+
+            {showPopup && (
+                <InviteUserPopup
+                    sendInvite={sendInvite}
+                    inviteEmail={inviteEmail}
+                    setInviteEmail={setInviteEmail}
+                    setShowPopup={setShowPopup}
                 />
             )}
         </div>
