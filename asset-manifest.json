@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/jsramverk-fe/static/css/main.ef121899.css",
-    "main.js": "/jsramverk-fe/static/js/main.c63ad09a.js",
+    "main.css": "/jsramverk-fe/static/css/main.e98dc57f.css",
+    "main.js": "/jsramverk-fe/static/js/main.b9dc0a53.js",
     "static/js/453.8bd12ba7.chunk.js": "/jsramverk-fe/static/js/453.8bd12ba7.chunk.js",
     "index.html": "/jsramverk-fe/index.html",
-    "main.ef121899.css.map": "/jsramverk-fe/static/css/main.ef121899.css.map",
-    "main.c63ad09a.js.map": "/jsramverk-fe/static/js/main.c63ad09a.js.map",
+    "main.e98dc57f.css.map": "/jsramverk-fe/static/css/main.e98dc57f.css.map",
+    "main.b9dc0a53.js.map": "/jsramverk-fe/static/js/main.b9dc0a53.js.map",
     "453.8bd12ba7.chunk.js.map": "/jsramverk-fe/static/js/453.8bd12ba7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ef121899.css",
-    "static/js/main.c63ad09a.js"
+    "static/css/main.e98dc57f.css",
+    "static/js/main.b9dc0a53.js"
   ]
 }
